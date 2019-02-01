@@ -1,0 +1,19 @@
+<div class="container">
+  <div [hidden]="isApproved" class="alert alert-warning">
+    <strong>Please note!</strong> You have to be approved by a manager first in order to search ideas.
+  </div>
+  <div [hidden]="!hasError" class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>An error occurred during the search of ideas</strong>
+  </div>
+
+  <h2 class="mb-2" [hidden]="!isApproved">Search results for {{isTagSearch ? "tag" : ""}} <i>"{{searchTerm}}"</i>:</h2>
+
+  <div *ngIf="isApproved">
+    <div *ngFor="let idea of searchResults | async">
+      <idea [idea]="idea"></idea>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div *ngIf="idea">
+    <div class="row">
+        <div class=image_reference placement="bottom" ngbTooltip="Reference idea">
+            <a routerLink="/create-reference/1/{{idea.id}}"><img class="img-responsive" src="./assets/img/ref5.png"></a>
+        </div>
+        <div>
+            <div *ngIf="parentIdea">
+                <a routerLink="/details-parent/2/{{parentIdea.idea_id}}" class="ml-2"><img class="img-responsive">{{parentIdea.title}}</a>
+            </div> 
+        </div>    
+    </div>
+</div>

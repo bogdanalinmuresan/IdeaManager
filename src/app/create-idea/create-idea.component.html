@@ -1,0 +1,112 @@
+<div class="container">
+  <h1>Add an idea</h1>
+  <h5  [hidden]="!isRef">Referenced from: {{ideaReferenced.title}}</h5>
+  <div [hidden]="!hasError" class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>An error occured on the creation of your idea:</strong> {{errorMessage}}
+  </div>
+  <div class="row">
+    <div class="col-8">
+      <form (ngSubmit)="onSubmit(createIdeaForm)" #createIdeaForm="ngForm">
+          <div class="form-group">
+            <input type="text" id="title" class="form-control form-control-lg" minlength="5" required [(ngModel)]="idea.title" name="title" #title="ngModel"
+                    aria-describedby="titleHelp" placeholder="Title">
+            <small id="titleHelp" class="form-text text-muted">Give your idea a short title.</small>
+            <div [hidden]="title.valid || title.pristine" class="alert alert-info">A title of min. 5 characters is required.</div>
+          </div>
+
+          <div class="form-group">
+            <textarea type="text" id="shortDesc" class="form-control" style="resize:none" rows="2"  [(ngModel)]="idea.shortDescription" name="short_desc"
+                      #short_desc="ngModel" aria-describedby="shortDescHelp" placeholder="Short description" minlength="10" required></textarea>
+            <small id="shortDescHelp" class="form-text text-muted">Provide a brief description of the idea.</small>
+            <div [hidden]="short_desc.valid || short_desc.pristine" class="alert alert-info">A short description of min. 10 characters is required.</div>
+          </div>
+
+          <div class="form-group">
+            <ng-template #popoverContent>You can use Markdown syntax inside your description to make your text look more appealing.
+              For example use _text_ to make it look <i>italic</i>, **text** to make it <b>bold</b> and ~text~ for a <s>strikethrough</s> style.</ng-template>
+            <textarea type="text" id="description" class="form-control" [ngbPopover]="popoverContent" placement="right" container="body" style="resize:none" rows="5" minlength="50" required
+                      [(ngModel)]="idea.description" name="description" #description="ngModel" aria-describedby="descHelp" placeholder="Description">
+            </textarea>
+            <small id="descHelp" class="form-text text-muted">Provide a description of the idea.</small>
+            <div [hidden]="description.valid || description.pristine" class="alert alert-info">A description of min. 50 characters is required.</div>
+          </div>
+        <button id="btnPreview" type="button" class="btn btn-primary mb-3" [disabled]="!idea.description" (click)="preview = !preview" [attr.aria-expanded]="preview" aria-controls="showPreview">Preview</button>
+        <div id="showPreview" [ngbCollapse]="!preview" class="mb-3">
+          <div class="card card-body" [innerHTML]="idea.description | textFormatting"></div>
+        </div>
+          <div class="form-group">
+            <ng-container *ngIf="editing; else elseTags">
+              <tag-input name="tags" [(ngModel)]='idea.tags' [displayBy]="'title'" [identifyBy]="'id'"  theme="bootstrap" #tags="ngModel" [onTextChangeDebounce]="50" required aria-describedby="tagHelp">
+                <tag-input-dropdown
+                  [autocompleteObservable]="autocompleteItems"
+                  [displayBy]="'title'"
+                  [identifyBy]="'id'"
+                  [focusFirstElement]="true">
+                </tag-input-dropdown>
+              </tag-input>
+            </ng-container>
+            <ng-template #elseTags>
+              <tag-input name="tags" [(ngModel)]="items" theme="bootstrap" #tags="ngModel" [onTextChangeDebounce]="50" required aria-describedby="tagHelp">
+                <tag-input-dropdown
+                  [autocompleteObservable]="autocompleteItems"
+                  [displayBy]="'title'"
+                  [identifyBy]="'id'"
+                  [focusFirstElement]="true">
+                </tag-input-dropdown>
+              </tag-input>
+            </ng-template>
+              <small id="tagHelp" class="form-text text-muted">Provide at least 1 tag for the idea.</small>
+          </div>
+          <div class="form-group">
+            <b>Attachments</b><br/>
+            <div>
+              <label for="upload" class="uploadButton">Upload</label>
+              <input type="file" (change)="detectFiles($event)" accept=".png,.jpg,.jpeg,.pdf" multiple id="upload">
+            </div>
+
+            <div class="attachments">
+              <div *ngFor="let file of fileList">
+                  <div class="file float-left" [ngClass]="{'image': file.type.includes('image'),'pdf': file.type=='application/pdf'}">
+                    <ng-container *ngIf="file.progress < 100">
+                      <div class="progress" [ngStyle]="{'width': 100-file.progress + '%'}"></div>
+                    </ng-container>
+                    <span class="delete" (click)="removeFile(file)"></span>
+                    <span class="filename">{{(file.originalName | slice:0:5) + (file.originalName.length > 5 ? '..' : '')}}.{{file.originalName | splitAndGetLast:"."}}</span>
+                  </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="mb-3">&nbsp;</div>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="published" id="releaseDraft" [value]="false" [(ngModel)]="idea.published" required checked>
+              Draft
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="published" id="releasePublished" [value]="true" [(ngModel)]="idea.published" required>
+              Published
+            </label>
+          </div>
+          <ng-container *ngIf="editing; else elseSubmit">
+            <button type="submit" class="btn btn-success" [disabled]="!createIdeaForm.form.valid">Update</button>
+          </ng-container>
+          <ng-template #elseSubmit>
+            <button type="submit" class="btn btn-success" [disabled]="!createIdeaForm.form.valid">Create</button>
+          </ng-template>
+          <button type="cancel" class="btn btn-danger" (click)="cancel()">Cancel</button>
+        </form>
+    </div>
+    <div class="col-4">
+      <div class="alert alert-info" role="alert">
+        <strong>Tip!</strong>
+        <p>Make sure to give your idea a title that interests the other readers of the ideas. This way your idea is more likely to be seen.</p>
+      </div>
+    </div>
+  </div>
+</div>

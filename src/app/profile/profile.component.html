@@ -1,0 +1,99 @@
+<div class="container">
+  <h1>Personal profile for {{user.Name}}</h1>
+  <div class="row mt-5">
+    <div class="col-5 m-auto">
+      <h2>Personal information</h2>
+      <form (ngSubmit)="onSubmitPersonal(profileForm)" #profileForm="ngForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" class="form-control" required [(ngModel)]="user.Name" #name="ngModel">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control" required [(ngModel)]="user.Email" #email="ngModel">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!profileForm.form.valid">Update</button>
+
+        <div [hidden]="!hasError" class="alert alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>An error occured updating the profile:</strong> {{errorMessage}}
+        </div>
+
+        <div [hidden]="!hasProfileError" class="alert alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>An error occured updating the username:</strong> {{errorMessageProfile}}
+        </div>
+        <div [hidden]="!(hasUpdateProfile && hasChanged)" class="alert" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Username updated!</strong>
+        </div>
+
+        <div [hidden]="!hasEmailError" class="alert alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>An error occured updating the email:</strong> {{errorMessageEmail}}
+        </div>
+        <div [hidden]="!(hasUpdateEmail && hasChanged)" class="alert" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Email updated!</strong>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+  <div class="form row mt-5">
+    <div class="col-5 m-auto">
+      <h2>Change password</h2>
+      <form (ngSubmit)="onSubmitPassword(passwordForm)" #passwordForm="ngForm">
+        <div class="form-group">
+          <label for="old">Current password</label>
+          <input type="password" id="old" name="old" class="form-control" required ngModel #old="ngModel">
+        </div>
+        <div class="form-group">
+          <label for="new1">New password</label>
+          <input type="password" id="new1" name="new1" class="form-control" required ngModel #new1="ngModel" aria-describedby="new1help">
+            <small id="new1Help" class="form-text text-muted">Password should be at least 6 characters</small>
+
+        </div>
+        <div class="form-group">
+          <label for="new2">Repeat new password</label>
+          <input type="password" id="new2" name="new2" class="form-control" required ngModel #new2="ngModel">
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!passwordForm.form.valid">Change password</button>
+
+        <div [hidden]="!hasPasswordError" class="alert alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>An error occured updating the password:</strong> {{errorMessagePassword}}
+        </div>
+        <div [hidden]="!hasUpdatePassword" class="alert" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Password updated!</strong>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+  <div class="form row mt-5 mb-5">
+    <div class="col-5 m-auto">
+      <h2>Delete account</h2>
+      <button (click)="onDeleteAccount()" type="button" class="btn btn-danger">Delete account</button>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,35 @@
+<div class="card mt-3" *ngIf="comment; let comment; else loading">
+
+  <div [hidden]="!hasError" class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>An error occured while removing this comment:</strong> {{errorMessage}}
+  </div>
+  <div class="card-header">
+    <div class="row">
+      <div class="col-10">
+        <h5 class="card-title">{{comment.title}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          {{comment.timestamp | date:'MMMM d yyyy HH:mm'}}
+        </h6>
+      </div>
+      <div class="col-2">
+        <button class="btn btn-danger float-right" [hidden]="!canRemove" (click)="deleteComment()">Delete</button>
+      </div>
+    </div>
+  </div>
+  <div class=card-body>
+    <blockquote class="blockquote mb-0">
+      <p>{{comment.content}}</p>
+      <footer class="blockquote-footer">by {{comment.username}}</footer>
+    </blockquote>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="text-center">
+    <h1>Loading comment...</h1>
+  </div>
+</ng-template>
+

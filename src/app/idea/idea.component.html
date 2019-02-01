@@ -1,0 +1,77 @@
+<div *ngIf="idea">
+  <div [hidden]="!hasError" class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>An error occured while removing this idea:</strong> {{errorMessage}}
+  </div>
+
+  <div class="back btn btn-secondary mb-3" (click)="goBack()" [hidden]="!full">  
+    Return to dashboard
+  </div>
+
+  <div class="card mb-3">
+      <div class="card-header">
+          <div class="row mb-0">
+              <div class="col-sm-8">
+                <ng-container *ngIf="full; else elseTemplate">
+                  <h4 class="idea-title card-title mb-0 float-left">{{idea.title}}</h4>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  <a routerLink="/details/{{idea.id}}"><h4 class="idea-title card-title mb-0 float-left">{{idea.title}}</h4>
+                    <img *ngIf="idea.attachments?.length > 0" class="pl-1" width="25px" height="25px" src="./assets/img/attachment.png"></a>
+                </ng-template>
+                <h4 [hidden]="idea.published" class="text-muted float-left ml-3">(Draft)</h4>
+                <!-- Display editing options for managers and owners -->
+                <div *ngIf="full && canEditIdea">
+                  <span class="separator ml-2 float-left"></span>
+                  <a routerLink="/edit-idea/1/{{idea.id}}"><h4 class="idea-action float-left ml-2">Edit</h4></a>
+                </div>
+                <!-- Display deleting options for managers only -->
+                <div *ngIf="full && canRemoveIdea">
+                  <span class="separator ml-2 float-left"></span>
+                  <a (click)="deleteIdea()"><h4 class="idea-action float-left ml-2 cursor-pointer">Delete</h4></a>
+                </div>
+              </div>
+              <div class="col-sm-4 float-right text-right mb-0">
+                {{idea.timestamp | date:'MMMM d yyyy HH:mm'}}
+              </div>
+          </div>
+          <div class="row mt-0">
+            <div class="col-sm-12">
+              <i>by {{idea.username}}</i>
+            </div>
+          </div>
+      </div>
+      <div class="card-block">
+        <div class="row">
+          <div class=col-sm-10>
+            <p [hidden]="full" class="card-text p-4">{{idea.shortDescription}}</p>
+            <p [hidden]="!full" class="card-text p-4" [innerHTML]="idea.description | textFormatting"></p>
+          </div>
+          <div class="col-sm-2">
+            <voting-ideas [idea]="idea"></voting-ideas>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a class="badge badge-primary mr-1 p-2" routerLink="/search/1/{{tag.title}}"
+            *ngFor="let tag of idea.tags">{{tag.title}}</a>
+          <i class="text-muted" [hidden]="idea.tags.length > 0">No tags</i>
+          <!--if idea description is shown only then permit to add reference ideas -->
+          <div [hidden]="!full" class="float-right">
+            <app-adding-reference-idea [idea]="idea"></app-adding-reference-idea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="full && idea.attachments?.length > 0">
+      <h2>Attachments</h2>
+      <div *ngFor="let file of idea.attachments">
+          <div class="file float-left download" [ngClass]="{'image': file.type.includes('image'),'pdf': file.type=='application/pdf'}" (click)="downloadAttachment(file.url)">
+            <span class="filename">{{(file.originalName | slice:0:5) + (file.originalName.length > 5 ? '..' : '')}}.{{file.originalName | splitAndGetLast:"."}}</span>
+          </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="mb-3">&nbsp;</div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+
+.file {
+    height: 64px;
+    width: 64px;
+    margin: 5px;
+}
+.file.image {
+    background: url('/assets/img/image.png');
+    background-size: 64px 64px;
+    background-repeat: none;
+}
+.file.pdf {
+    background: url('/assets/img/pdf.png');
+    background-size: 64px 64px;
+    background-repeat: none;
+}
+.file .filename {
+    display: block;
+    width: 100%;
+    margin-top: 64px;
+}
+.file .delete {
+    background: url('/assets/img/delete.png');
+    background-size: 64px 64px;
+    width: 64px;
+    height: 64px;
+    position: absolute;;
+    cursor: pointer;
+    display: none;
+}
+.file:hover .delete {
+    display: block;
+}
+.file:first-child {
+    margin-left: 0px;
+}
+.file .filename {
+    font-size: 8pt;
+}
+
+.uploadButton {
+    background: url('/assets/img/upload.png');
+    background-position: left;
+    height: 48px;
+    background-repeat: no-repeat;
+    padding: 5px;
+    padding-left: 53px;
+    line-height: 48px;
+    font-weight: bold;
+    font-size: 16pt;
+    cursor: pointer;
+}
+.uploadButton:hover {
+    background-position-y: -3px;
+}
+#upload {
+    display: none;
+}
+.progress {
+    opacity: 0.85;
+    height: 64px;
+    display: block;
+    float: right;
+}

@@ -1,0 +1,44 @@
+.list {
+    background: url('/assets/img/list.png');
+    width: 12px;
+    height: 16px;
+}
+.btn:hover:not(.active) .icon, .btn:hover:not(.active) .icon {
+    filter: invert(100%);
+}
+.grid {
+    background: url('/assets/img/grid.png');
+    width: 16px;
+    height: 16px;
+}
+.sort {
+    background: url('/assets/img/sort.png');
+    width: 16px;
+    height: 16px;
+}
+.icon {
+    margin-right: 5px;
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    line-height: 16px;
+}
+.btn-display {
+    line-height: 16px;
+    color: #000;
+    box-shadow: none !important;
+}
+.btn-display.active {
+    filter: invert(100%);
+    color: #000 !important; /* Filter will invert color!! */
+}
+
+.item.list-group-item-light
+{
+    float: none;
+    width: 100%!important;
+    max-width: none;
+}
+.item.grid-group-item {
+    float: left;
+}

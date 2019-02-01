@@ -1,0 +1,70 @@
+
+
+.number-votes{
+    padding: 7px;
+}
+
+.image_vote{
+    width: 25px; 
+    height: 25px;
+    background-size: 25px 25px;
+}
+.image_vote.down {
+    background: url('/assets/img/arrow_down.png');
+    background-size: 25px 25px;
+}
+.image_vote.up {
+    background: url('/assets/img/arrow_up.png');
+    background-size: 25px 25px;
+}
+
+/* change status */
+.image_vote.down:not(.isOwner):hover{/*the vote is positive and can be changed to negative*/
+    background: url('/assets/img/arrow_down_green.png');
+    background-size: 25px 25px;
+}
+.image_vote.up:not(.isOwner):hover{/*the vote is negative and can be changed to positive*/
+    background: url('/assets/img/arrow_up_green.png');
+    background-size: 25px 25px;
+}
+
+.image_vote.up.isPositive{
+    background: url('/assets/img/arrow_up_green.png');
+    background-size: 25px 25px;
+}
+
+.image_vote.down.isNegative{
+    background: url('/assets/img/arrow_down_green.png');
+    background-size: 25px 25px;
+}
+/*red arrow when remove vote*/
+.image_vote.up.isPositive:not(.isOwner):hover{
+    background: url('/assets/img/arrow-red-up.png');
+    background-size: 25px 25px;
+}
+/*red arrow when remove vote*/
+.image_vote.down.isNegative:not(.isOwner):hover{
+    background: url('/assets/img/arrow-red-down.png');
+    background-size: 25px 25px;
+}
+
+
+
+.image_vote.up.isOwner {
+    cursor: default;
+}
+.image_vote.down.isOwner{
+    cursor: default;
+    
+}
+
+.image_vote.down:not(.isOwner) {
+    cursor: pointer;
+}
+.image_vote.up:not(.isOwner) {
+    cursor: pointer;
+}
+
+
+
+

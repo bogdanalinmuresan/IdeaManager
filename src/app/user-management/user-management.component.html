@@ -1,0 +1,43 @@
+<div class="container">
+  <h1>User Management</h1>
+
+  <div [hidden]="!hasError" class="alert alert-danger" role="alert">
+    <strong>An error occured:</strong> {{errorMessage}}
+  </div>
+
+  <h2 class="mt-5">User Approval</h2>
+  <div id="noApprovals" [hidden]="(pendingUsers | async)?.length > 0" class="alert alert-info" role="contentinfo">
+    There are currently no users that have to be approved.
+  </div>
+  <div class="pt-2" *ngFor="let user of pendingUsers | async">
+      <div class="row">
+        <div class="col-8">
+          <h5>{{user.Name}}</h5>
+          <p class="text-muted">{{user.Email}}</p>
+          </div>
+        <div class="col-4 text-right">
+          <button (click)="onUserAccept(user.id)" type="button" class="btn btn-success">Approve</button>
+          <button (click)="onUserDelete(user.id)" type="button" class="btn btn-danger">Disapprove</button>
+        </div>
+    </div>
+  </div>
+  <h2 class="mt-5">List of users</h2>
+
+  <div id="noUsers" [hidden]="(userList | async)?.length > 0" class="alert alert-info" role="contentinfo">
+    There are currently no users registered and approved.
+  </div>
+  <div class="pt-2" *ngFor="let user of userList | async">
+    <div class="row">
+      <div class="col-8">
+        <h5>{{user.Name}}</h5>
+        <p class="text-muted">{{user.Email}}</p>
+      </div>
+      <div class="col-4 text-right">
+        <button (click)="onUserDelete(user.id)" type="button" class="btn btn-danger">Delete account</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

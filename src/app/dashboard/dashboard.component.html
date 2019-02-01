@@ -1,0 +1,30 @@
+<div class="container">
+  <div [hidden]="isApproved" class="alert alert-warning">
+    <strong>Please note!</strong> You have to be approved by a manager first in order to use the dashboard.
+  </div>
+  <h2 [hidden]="(ideasObservable | async)?.length > 0 || !isApproved" class="text-center">There are currently no ideas. Go to <a [routerLink]="[ '/create' ]">Add idea</a> to share your great idea!</h2>
+  <div [hidden]="(ideasObservable | async)?.length == 0 || !isApproved" class="float-right mb-3" data-toggle="buttons">
+      <div class="btn-group">
+        <label class="btn-display btn btn-outline-secondary mr-2" id="sortButton" (click)="onSortRequest()">
+          <span class="icon sort"></span>Order by Votes
+        </label>
+      </div>
+      <div class="btn-group">
+        <label id="list" class="btn-display btn btn-outline-secondary active">
+          <input type="radio" name="display" id="list" value="list" checked>
+          <span class="icon list"></span>List
+        </label>
+        <label id="grid" class="btn-display btn btn-outline-secondary">
+          <input type="radio" name="display" id="grid" value="grid">
+          <span class="icon grid"></span>Grid
+        </label>
+      </div>
+  </div>
+  <div class="clearfix"></div>
+  <div id="ideas" class="row list-group">
+    <div *ngFor="let idea of ideasObservable | async" class="item col-xs-6 col-lg-6 list-group-item-light">
+      <idea [idea]="idea"></idea>
+    </div>
+  </div>
+
+</div>

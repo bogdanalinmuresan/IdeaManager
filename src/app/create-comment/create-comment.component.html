@@ -1,0 +1,39 @@
+<div *ngIf="idea">
+  <div [hidden]="!hasError" class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>An error occured on the creation of your comment:</strong> {{errorMessage}}
+  </div>
+
+  <div class="row">
+    <div class="col-8">
+      <form (ngSubmit)="onSubmit(createCommentForm)" #createCommentForm="ngForm">
+
+        <div class="form-group">
+            <input type="text" id="title" class="form-control form-control-lg" required ngModel name="title" #title="ngModel"
+                    aria-describedby="titleHelp" placeholder="Title">
+            <small id="titleHelp" class="form-text text-muted">Give your comment a short title.</small>
+            <div [hidden]="title.valid || title.pristine" class="alert alert-info">A title is required.</div>
+          </div>
+
+          <div class="form-group">
+            <textarea type="text" id="content" class="form-control" style="resize:none" rows="5" required ngModel
+                    name="content" #content="ngModel" aria-describedby="contentHelp" placeholder="Content"></textarea>
+            <small id="contentHelp" class="form-text text-muted">Your comment goes in here</small>
+            <div [hidden]="content.valid || content.pristine" class="alert alert-info">A comment text is required</div>
+          </div>
+
+          <button type="submit" class="btn btn-success" [disabled]="!createCommentForm.form.valid">Send</button>
+        </form>
+    </div>
+
+    <div class="col-4">
+      <div class="alert alert-info" role="alert">
+        <strong>Tip!</strong>
+        <p>Please keep a good tone in the comments :)</p>
+      </div>
+    </div>
+
+  </div>
+</div>

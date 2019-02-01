@@ -1,0 +1,75 @@
+.separator {
+    display: block;
+    background: url('/assets/img/dot.png');
+    width: 8px;
+    height: 8px;
+    background-size: 5px 10px;
+    background-position:center;
+    background-repeat: no-repeat;
+    margin-top: 10px;
+}
+.idea-action {
+    color: rgb(70, 70, 70);
+}
+.idea-action:hover {
+    color: rgb(100, 100, 100);
+}
+
+.file {
+    height: 64px;
+    width: 64px;
+    margin: 5px;
+}
+.file.image {
+    background: url('/assets/img/image.png');
+    background-size: 64px 64px;
+    background-repeat: none;
+}
+.file.pdf {
+    background: url('/assets/img/pdf.png');
+    background-size: 64px 64px;
+    background-repeat: none;
+}
+.file .filename {
+    display: block;
+    width: 100%;
+    margin-top: 64px;
+}
+.file .delete {
+    background: url('/assets/img/delete.png');
+    background-size: 64px 64px;
+    width: 64px;
+    height: 64px;
+    position: absolute;;
+    cursor: pointer;
+    display: none;
+}
+.file:hover .delete {
+    display: block;
+}
+.file:first-child {
+    margin-left: 0px;
+}
+.file .filename {
+    font-size: 8pt;
+}
+.file.download {
+    cursor: pointer;
+}
+
+.back {
+    background: url('/assets/img/back.png');
+    background-repeat: none;
+    background-position-y: center;
+    background-position-x: 5px;
+    height: 40px;
+    padding: 10px;
+    padding-left: 30px;
+    line-height: 20px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    color: #000 !important;
+}
+.back:hover {
+    filter: invert(100%);
+}

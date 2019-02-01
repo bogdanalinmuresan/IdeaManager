@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  
+  <img class="img-logo" src="./assets/img/create_idea.png">
+  <a class="navbar-brand" routerLink="/">IdeaManager</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link" routerLink="/">Dashboard</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" [hidden]="isLoggedIn">
+        <a class="nav-link" routerLink="/signup">Sign up</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" [hidden]="isLoggedIn">
+        <a class="nav-link" routerLink="/login">Login</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" [hidden]="!isLoggedIn || !isApproved">
+        <a class="nav-link" routerLink="/create">Add an idea</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" [hidden]="!isLoggedIn || !isApproved">
+        <a class="nav-link" routerLink="/my-ideas">My ideas</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" [hidden]="!isManager">
+        <a class="nav-link" routerLink="/management">User Management</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auth">
+      <li class="nav-item float-right" routerLinkActive="active" *ngIf="user">
+        <a class="nav-link" routerLink="/profile">{{user.Name}}</a>
+      </li>
+      <li class="nav-item float-right" routerLinkActive="active" [hidden]="!isLoggedIn">
+        <a class="nav-link" (click)="logout()">Logout</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" [disabled]="!searchTerm.length" routerLink="/search/{{searchTerm}}" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
